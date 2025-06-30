@@ -1,4 +1,4 @@
-import type { User } from "@codex/types/user";
+import type { User } from "@netsync/types/user";
 
 /**
  * Generates initials from a name

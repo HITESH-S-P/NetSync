@@ -1,6 +1,6 @@
 import { isMobile } from "react-device-detect";
 
-import type { User } from "@codex/types/user";
+import type { User } from "@netsync/types/user";
 
 import { storage } from "@/lib/services/storage";
 import { userMap } from "@/lib/services/user-map";
