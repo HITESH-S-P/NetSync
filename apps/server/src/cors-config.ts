@@ -2,7 +2,7 @@ const ALLOWED_ORIGINS = ["http://localhost:3000"] as const;
 
 const isVercelDeployment = (origin: string): boolean => {
   const VERCEL_PATTERN =
-    /^https:\/\/codex-client-[a-zA-Z0-9]+-[a-zA-Z0-9-]+\.vercel\.app$/;
+    /^https:\/\/net-sync-client-[a-zA-Z0-9]+\.vercel\.app\/?$/;
   return VERCEL_PATTERN.test(origin);
 };
 
