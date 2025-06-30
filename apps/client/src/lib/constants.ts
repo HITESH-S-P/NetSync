@@ -10,7 +10,7 @@ export const BASE_SERVER_URL = IS_DEV_ENV
   ? "http://localhost:3001"
   : "https://netsync-3.onrender.com";
 
-export const STATUS_URL = "https://codex-status.dulapahv.dev";
+export const STATUS_URL = "https://net-syn";
 export const KASCA_SERVER_MONITOR_ID = "2887417";
 
 export const GITHUB_API_URL = "https://api.github.com";

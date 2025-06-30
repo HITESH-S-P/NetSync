@@ -11,7 +11,8 @@ let socketInstance: Socket | null = null;
 export const getSocket = (): Socket => {
   if (!socketInstance || !socketInstance.connected) {
     socketInstance = io(BASE_SERVER_URL, {
-      transports: ["websocket", "polling"],
+      transports: ["polling"],
+      // transports: ["websocket", "polling"],
       autoConnect: false,
       timestampRequests: false,
     });
