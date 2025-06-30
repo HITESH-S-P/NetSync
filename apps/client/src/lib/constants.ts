@@ -5,10 +5,10 @@ export const IS_DEV_ENV =
 
 export const BASE_CLIENT_URL = IS_DEV_ENV
   ? "http://localhost:3000"
-  : "https://codex.dulapahv.dev";
+  : "https://net-sync-client-rhtk.vercel.app";
 export const BASE_SERVER_URL = IS_DEV_ENV
   ? "http://localhost:3001"
-  : "https://codex-server.dulapahv.dev";
+  : "https://netsync-3.onrender.com";
 
 export const STATUS_URL = "https://codex-status.dulapahv.dev";
 export const KASCA_SERVER_MONITOR_ID = "2887417";
