@@ -1,7 +1,7 @@
 import type { Socket } from "socket.io";
 
-import { CodeServiceMsg } from "@netsync/types/message";
-import type { Cursor } from "@netsync/types/operation";
+import { CodeServiceMsg } from "@rvsync/types/message";
+import type { Cursor } from "@rvsync/types/operation";
 
 import { getUserRoom } from "./room-service";
 

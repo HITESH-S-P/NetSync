@@ -74,14 +74,14 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
         <Dialog
           open={isOpen}
           onOpenChange={setIsOpen}
-          aria-label="About Netsync"
+          aria-label="About RVsync"
         >
           <DialogContent className={cn("max-w-2xl", forceDark && "dark")}>
             <DialogHeader className="text-foreground text-left">
               <DialogTitle>{SITE_NAME}</DialogTitle>
               <DialogDescription className="pt-2 text-base">
-                This project is part of the course &quot;COMPSCI4025P Level 4
-                Individual Project&quot; at the University of Glasgow.
+                RVsync is a real-time collaborative coding platform built for
+                seamless pair programming and team collaboration.
               </DialogDescription>
             </DialogHeader>
 
@@ -91,7 +91,7 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
             >
               <Image
                 src="/images/cover.png"
-                alt="application interface preview"
+                alt="RVsync application interface preview"
                 className="absolute rounded-md object-cover"
                 fill
                 sizes="1200px"
@@ -112,10 +112,10 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
 
             <div className="text-foreground space-y-2">
               <p className="text-center">
-                Made with 💕 by <span className="font-medium">dulapahv</span>
+                Built by <span className="font-medium">Hitesh S P</span>
               </p>
               <nav
-                className="grid grid-cols-4 gap-2"
+                className="grid grid-cols-3 gap-2"
                 aria-label="External links"
               >
                 <ExternalLink forceDark={forceDark} />
@@ -135,21 +135,21 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
     }
 
     return (
-      <Drawer open={isOpen} onOpenChange={setIsOpen} aria-label="About ">
+      <Drawer open={isOpen} onOpenChange={setIsOpen} aria-label="About RVsync">
         <DrawerContent>
           <DrawerHeader>
             <DrawerTitle className="text-left">{SITE_NAME}</DrawerTitle>
             <DrawerDescription className="pt-2 text-left text-base">
-              This project is part of the course &quot;COMPSCI4025P Level 4
-              Individual Project&quot; at the University of Glasgow.
+              RVsync is a real-time collaborative coding platform built for
+              seamless pair programming and team collaboration.
             </DrawerDescription>
           </DrawerHeader>
 
-          <div className="w-full px-4" aria-label=" application preview">
+          <div className="w-full px-4" aria-label="RVsync application preview">
             <div className="relative aspect-[600/315] w-full max-w-full">
               <Image
                 src="/images/cover.png"
-                alt="CodeX application interface preview"
+                alt="RVsync application interface preview"
                 className="rounded-md object-cover"
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
@@ -173,7 +173,7 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
 
           <div className="mx-4 space-y-2">
             <p className="text-center">
-              Made with 💕 by <span className="font-medium">dulapahv</span>
+              Built by <span className="font-medium">Hitesh S P</span>
             </p>
             <nav className="grid grid-cols-2 gap-2" aria-label="External links">
               <ExternalLink forceDark={forceDark} />
@@ -193,6 +193,6 @@ const AboutDialog = forwardRef<AboutDialogRef, AboutDialogProps>(
   }
 );
 
-AboutDialog.displayName = "OpenPromptDialog";
+AboutDialog.displayName = "AboutDialog";
 
 export { AboutDialog, type AboutDialogRef };

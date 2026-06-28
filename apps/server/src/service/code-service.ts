@@ -1,7 +1,7 @@
 import type { Server, Socket } from "socket.io";
 
-import { CodeServiceMsg } from "@netsync/types/message";
-import type { EditOp } from "@netsync/types/operation";
+import { CodeServiceMsg } from "@rvsync/types/message";
+import type { EditOp } from "@rvsync/types/operation";
 
 import { getUserRoom } from "./room-service";
 import { getCustomId } from "./user-service";

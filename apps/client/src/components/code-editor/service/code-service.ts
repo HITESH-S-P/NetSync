@@ -2,7 +2,7 @@ import type { RefObject } from "react";
 
 import type * as monaco from "monaco-editor";
 
-import type { EditOp } from "@netsync/types/operation";
+import type { EditOp } from "@rvsync/types/operation";
 
 /**
  * Update the code in the editor.

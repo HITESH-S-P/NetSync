@@ -1,7 +1,7 @@
 import type { Server, Socket } from "socket.io";
 
-import { CodeServiceMsg, RoomServiceMsg } from "@netsync/types/message";
-import type { ExecutionResult } from "@netsync/types/terminal";
+import { CodeServiceMsg, RoomServiceMsg } from "@rvsync/types/message";
+import type { ExecutionResult } from "@rvsync/types/terminal";
 
 import { generateRoomID } from "@/utils/generate-room-id";
 import { normalizeRoomId } from "@/utils/normalize-room-id";

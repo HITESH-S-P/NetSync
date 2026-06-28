@@ -1,7 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { RoomServiceMsg } from "@netsync/types/message";
+import { RoomServiceMsg } from "@rvsync/types/message";
 
 import { GITHUB_CLIENT_ID, GITHUB_OAUTH_URL } from "@/lib/constants";
 import { getSocket } from "@/lib/socket";

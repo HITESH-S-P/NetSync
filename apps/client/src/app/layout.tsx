@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   referrer: "origin-when-cross-origin",
   keywords:
-    "NetSync is a seamless and intelligent platform for synchronizing networked systems with speed, precision, and reliability.",
+    "RVsync, real-time collaboration, code editor, pair programming, live coding, shared terminal, video chat, collaborative coding",
   creator: NAME,
   publisher: NAME,
   authors: {
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    creator: "@hitesh",
+    creator: "@hitesh_sp",
   },
   alternates: {
     canonical: BASE_CLIENT_URL,

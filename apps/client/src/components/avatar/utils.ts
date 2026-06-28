@@ -1,4 +1,4 @@
-import type { User } from "@netsync/types/user";
+import type { User } from "@rvsync/types/user";
 
 /**
  * Generates initials from a name

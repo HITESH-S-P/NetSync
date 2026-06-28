@@ -13,8 +13,8 @@ import { isMobile } from "react-device-detect";
 import type Peer from "simple-peer";
 import { toast } from "sonner";
 
-import { StreamServiceMsg } from "@netsync/types/message";
-import type { User } from "@netsync/types/user";
+import { StreamServiceMsg } from "@rvsync/types/message";
+import type { User } from "@rvsync/types/user";
 
 import { storage } from "@/lib/services/storage";
 import { userMap } from "@/lib/services/user-map";

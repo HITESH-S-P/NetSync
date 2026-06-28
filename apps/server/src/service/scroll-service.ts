@@ -1,7 +1,7 @@
 import type { Socket } from "socket.io";
 
-import { ScrollServiceMsg } from "@netsync/types/message";
-import type { Scroll } from "@netsync/types/scroll";
+import { ScrollServiceMsg } from "@rvsync/types/message";
+import type { Scroll } from "@rvsync/types/scroll";
 
 import { getUserRoom } from "./room-service";
 import { getCustomId } from "./user-service";

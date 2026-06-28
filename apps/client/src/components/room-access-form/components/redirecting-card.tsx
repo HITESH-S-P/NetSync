@@ -8,13 +8,12 @@ export const RedirectingCard = () => (
     aria-live="polite"
   >
     <Alert
-      className="bg-background/50 flex gap-x-2"
+      className="bg-black/40 border-white/10 text-white flex items-center gap-x-3 p-4 rounded-xl"
       aria-labelledby="redirect-title"
-      aria-describedby="redirect-description"
     >
-      <Spinner className="size-6" />
+      <Spinner className="size-5 text-indigo-400" />
       <div>
-        <AlertTitle id="redirect-title">Wait</AlertTitle>
+        <AlertTitle id="redirect-title" className="font-semibold text-white/95">Redirecting to room...</AlertTitle>
       </div>
     </Alert>
   </div>

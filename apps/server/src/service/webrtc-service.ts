@@ -1,7 +1,7 @@
 import type { SignalData } from "simple-peer";
 import type { Socket } from "socket.io";
 
-import { StreamServiceMsg } from "@netsync/types/message";
+import { StreamServiceMsg } from "@rvsync/types/message";
 
 import * as roomService from "./room-service";
 import * as userService from "./user-service";

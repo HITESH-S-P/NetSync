@@ -6,7 +6,7 @@
  * - Loading states
  * - Error display
  *
- * By Dulapah Vibulsanti (https://dulapahv.dev)
+ * By Hitesh S P
  */
 
 import { ArrowRight } from 'lucide-react';
@@ -57,13 +57,13 @@ export const InvitedSection = ({
           role="group"
           aria-labelledby="name-join"
         >
-          <Label htmlFor="name-join" className="text-sm sm:text-base">
-            Name
+          <Label htmlFor="name-join" className="text-sm font-medium text-white/70 sm:text-base">
+            Your Name
           </Label>
           <Input
             id="name-join"
             placeholder="Enter your name"
-            className="text-sm sm:text-base"
+            className="input-modern w-full"
             disabled={isDisabled}
             aria-required="true"
             aria-invalid={errors.name ? 'true' : 'false'}
@@ -71,22 +71,23 @@ export const InvitedSection = ({
             {...register('name')}
           />
           {errors.name && (
-            <p id={nameErrorId} className="text-sm text-red-500" role="alert">
+            <p id={nameErrorId} className="text-xs text-rose-500 font-medium" role="alert">
               {errors.name.message}
             </p>
           )}
         </div>
         <Button
           type="submit"
-          className="bg-primary text-sm sm:text-base"
+          className="btn-gradient w-full py-6 flex items-center justify-center gap-2 border-0"
           disabled={isDisabled}
           aria-busy={isSubmitting}
         >
-          {isSubmitting && <Spinner className="mr-2 size-4 sm:size-5" />}
-          {isSubmitting ? 'Joining...' : 'Join Room'}
-          {!isSubmitting && (
-            <ArrowRight className="ml-2 size-4 sm:size-5" aria-hidden="true" />
+          {isSubmitting ? (
+            <Spinner className="size-4 sm:size-5" />
+          ) : (
+            <ArrowRight className="size-4 sm:size-5" aria-hidden="true" />
           )}
+          <span>{isSubmitting ? 'Joining...' : 'Join Session'}</span>
         </Button>
       </form>
     </section>

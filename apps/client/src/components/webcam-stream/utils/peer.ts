@@ -14,7 +14,7 @@ import type { Dispatch, RefObject, SetStateAction } from "react";
 import Peer from "simple-peer";
 import { toast } from "sonner";
 
-import { StreamServiceMsg } from "@netsync/types/message";
+import { StreamServiceMsg } from "@rvsync/types/message";
 
 import { getSocket } from "@/lib/socket";
 import { parseError } from "@/lib/utils";

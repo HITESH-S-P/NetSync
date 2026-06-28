@@ -9,13 +9,12 @@ import {
   type SetStateAction,
 } from "react";
 import { useParams, useRouter } from "next/navigation";
-
 import type { Monaco } from "@monaco-editor/react";
 import type * as monaco from "monaco-editor";
 
-import { CodeServiceMsg, RoomServiceMsg } from "@netsync/types/message";
-import type { ExecutionResult } from "@netsync/types/terminal";
-import type { User } from "@netsync/types/user";
+import { CodeServiceMsg, RoomServiceMsg } from "@rvsync/types/message";
+import type { ExecutionResult } from "@rvsync/types/terminal";
+import type { User } from "@rvsync/types/user";
 import { initEditorTheme } from "@/lib/init-editor-theme";
 import { userMap } from "@/lib/services/user-map";
 import { getSocket } from "@/lib/socket";
@@ -42,6 +41,8 @@ import {
 } from "@/components/status-bar";
 import { Terminal } from "@/components/terminal";
 import { WebcamStream } from "@/components/webcam-stream";
+
+import { Toolbar } from "@/components/toolbar";
 
 const MemoizedToolbar = memo(function MemoizedToolbar({
   monaco,
@@ -74,17 +75,39 @@ const MemoizedToolbar = memo(function MemoizedToolbar({
 }) {
   return (
     <div
-      className="fixed flex w-full items-center justify-between gap-x-2
-        bg-black p-1"
+      className="fixed flex w-full items-center justify-between gap-x-2 bg-[#09090f] border-b border-white/[0.08] px-4 py-1.5 h-11 z-50 backdrop-blur-md"
     >
-      <RunButton monaco={monaco} editor={editor} setOutput={setOutput} />
-      <nav aria-label="Collaboration Tools">
-        <div className="flex items-center gap-x-1 sm:gap-x-2">
-          <ShareButton roomId={roomId} />
-          {/* <FollowUser users={users} /> */}
-          <LeaveButton />
+      <div className="flex items-center gap-x-4">
+        {/* Brand Logo */}
+        <div className="flex items-center gap-x-2 pl-1 select-none">
+          <span className="text-sm font-bold text-gradient-brand">RVsync</span>
         </div>
-      </nav>
+        <div className="h-4 w-px bg-white/10 hidden md:block" />
+        <Toolbar
+          monaco={monaco}
+          editor={editor}
+          setShowNotepad={setShowNotepad}
+          setShowTerminal={setShowTerminal}
+          setShowWebcam={setShowWebcam}
+          setShowLivePreview={setShowLivePreview}
+          showNotepad={showNotepad}
+          showTerminal={showTerminal}
+          showWebcam={showWebcam}
+          showLivePreview={showLivePreview}
+        />
+      </div>
+
+      <div className="flex items-center gap-x-3">
+        <RunButton monaco={monaco} editor={editor} setOutput={setOutput} />
+        <div className="h-4 w-px bg-white/10" />
+        <nav aria-label="Collaboration Tools">
+          <div className="flex items-center gap-x-1.5 sm:gap-x-2">
+            <ShareButton roomId={roomId} />
+            <FollowUser users={users} />
+            <LeaveButton />
+          </div>
+        </nav>
+      </div>
     </div>
   );
 });
@@ -233,7 +256,7 @@ export default function Room() {
     >
       <RemotePointers />
       <div
-        className="h-9 flex-shrink-0"
+        className="h-11 flex-shrink-0"
         role="toolbar"
         aria-label="Editor Controls"
       >
@@ -257,7 +280,7 @@ export default function Room() {
       </div>
       {defaultCode !== null && mdContent !== null ? (
         <ResizablePanelGroup
-          className="!h-[calc(100%-54px)]"
+          className="!h-[calc(100%-62px)]"
           direction="horizontal"
         >
           <ResizablePanel defaultSize={65} minSize={10}>

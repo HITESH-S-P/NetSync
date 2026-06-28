@@ -49,7 +49,7 @@ import {
 import { githubDark, githubLight } from "@uiw/codemirror-theme-github";
 import { useTheme } from "next-themes";
 
-import { RoomServiceMsg } from "@netsync/types/message";
+import { RoomServiceMsg } from "@rvsync/types/message";
 
 import { getSocket } from "@/lib/socket";
 import { cn } from "@/lib/utils";

@@ -3,7 +3,7 @@ import type { Dispatch, RefObject, SetStateAction } from "react";
 import { isMobile } from "react-device-detect";
 import { toast } from "sonner";
 
-import { StreamServiceMsg } from "@netsync/types/message";
+import { StreamServiceMsg } from "@rvsync/types/message";
 
 import { getSocket } from "@/lib/socket";
 import { parseError } from "@/lib/utils";

@@ -13,7 +13,7 @@
       "outputs": ["dist/**"],
       "cache": true
     },
-    "@netsync/types#build": {
+    "@rvsync/types#build": {
       "outputs": ["dist/**/*.d.ts", "dist/**/*.js"],
       "cache": true
     },

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Download, Trash2 } from "lucide-react";
-import type { ExecutionResult } from "@netsync/types/terminal";
+import type { ExecutionResult } from "@rvsync/types/terminal";
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
