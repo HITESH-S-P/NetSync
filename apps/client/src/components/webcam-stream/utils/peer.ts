@@ -36,17 +36,27 @@ export const createPeer = (
     // Clean up existing peer if it exists
     cleanupPeer(userID, peersRef, setRemoteStreams);
 
-    // Create peer with stream config
+    // Create peer with stream config and reliable STUN servers for NAT traversal
     const peer = new Peer({
       initiator,
       // Only include stream if it exists and has active tracks
       stream: streamRef.current?.getTracks().length
         ? streamRef.current
         : undefined,
+      config: {
+        iceServers: [
+          { urls: "stun:stun.l.google.com:19302" },
+          { urls: "stun:stun1.l.google.com:19302" },
+          { urls: "stun:stun2.l.google.com:19302" },
+          { urls: "stun:stun3.l.google.com:19302" },
+          { urls: "stun:stun4.l.google.com:19302" },
+          { urls: "stun:stun.services.mozilla.com" },
+        ],
+      },
     });
 
     peer.on("signal", (signal) => {
-      socket.emit(StreamServiceMsg.SIGNAL, signal);
+      socket.emit(StreamServiceMsg.SIGNAL, { targetID: userID, signal });
     });
 
     peer.on("stream", (stream) => {
@@ -99,6 +109,12 @@ export const handleSignal = (
   pendingSignalsRef: RefObject<Record<string, unknown[]>>
 ) => {
   try {
+    // If we receive an offer signal, it means the remote peer is initiating a new connection.
+    // We clean up any existing peer first to ensure a fresh, clean connection.
+    if (signal && (signal.type === "offer" || signal.renegotiate)) {
+      cleanupPeer(userID, peersRef, setRemoteStreams);
+    }
+
     let peer = peersRef.current[userID];
 
     if (!peer || peer.destroyed) {

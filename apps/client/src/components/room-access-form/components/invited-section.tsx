@@ -63,7 +63,7 @@ export const InvitedSection = ({
           <Input
             id="name-join"
             placeholder="Enter your name"
-            className="input-modern w-full"
+            className="input-premium w-full"
             disabled={isDisabled}
             aria-required="true"
             aria-invalid={errors.name ? 'true' : 'false'}
@@ -78,7 +78,7 @@ export const InvitedSection = ({
         </div>
         <Button
           type="submit"
-          className="btn-gradient w-full py-6 flex items-center justify-center gap-2 border-0"
+          className="btn-premium w-full flex items-center justify-center gap-2"
           disabled={isDisabled}
           aria-busy={isSubmitting}
         >

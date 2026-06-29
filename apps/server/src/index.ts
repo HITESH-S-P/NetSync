@@ -123,8 +123,10 @@ io.on("connection", (socket) => {
   socket.on(StreamServiceMsg.STREAM_READY, () =>
     webRTCService.onStreamReady(socket)
   );
-  socket.on(StreamServiceMsg.SIGNAL, (signal: SignalData) =>
-    webRTCService.handleSignal(socket, signal)
+  socket.on(
+    StreamServiceMsg.SIGNAL,
+    (payload: { targetID: string; signal: SignalData }) =>
+      webRTCService.handleSignal(socket, payload)
   );
   socket.on(StreamServiceMsg.CAMERA_OFF, () =>
     webRTCService.onCameraOff(socket)

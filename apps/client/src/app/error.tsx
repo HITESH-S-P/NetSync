@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { AlertOctagon, Home, RefreshCcw } from "lucide-react";
-import { BASE_CLIENT_URL } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 
 export default function Error({
@@ -46,7 +45,7 @@ export default function Error({
           </Button>
           
           <Button asChild className="btn-gradient flex-1 py-6 flex items-center justify-center gap-2 border-0">
-            <Link href={BASE_CLIENT_URL}>
+            <Link href="/">
               <Home className="size-4" />
               <span>Return Home</span>
             </Link>

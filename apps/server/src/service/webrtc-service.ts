@@ -15,13 +15,20 @@ export const onStreamReady = (socket: Socket) => {
   }
 };
 
-export const handleSignal = (socket: Socket, signal: SignalData) => {
+export const handleSignal = (
+  socket: Socket,
+  payload: { targetID: string; signal: SignalData }
+) => {
   const room = roomService.getUserRoom(socket);
   if (!room) return;
-  socket.to(room).emit(StreamServiceMsg.SIGNAL, {
-    userID: userService.getCustomId(socket.id),
-    signal,
-  });
+
+  const targetSocketId = userService.getSocketId(payload.targetID);
+  if (targetSocketId) {
+    socket.to(targetSocketId).emit(StreamServiceMsg.SIGNAL, {
+      userID: userService.getCustomId(socket.id),
+      signal: payload.signal,
+    });
+  }
 };
 
 export const onCameraOff = (socket: Socket) => {

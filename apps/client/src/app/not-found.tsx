@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { Home, Compass } from "lucide-react";
-import { BASE_CLIENT_URL } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
@@ -30,7 +29,7 @@ export default function NotFound() {
         </p>
 
         <Button asChild className="btn-gradient w-full py-6 flex items-center justify-center gap-2 border-0">
-          <Link href={BASE_CLIENT_URL}>
+          <Link href="/">
             <Home className="size-4" />
             <span>Return Home</span>
           </Link>

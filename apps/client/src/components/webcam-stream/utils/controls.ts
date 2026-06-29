@@ -26,6 +26,7 @@ export const toggleCamera = async (
       const mediaStarted = await getMedia();
       if (mediaStarted) {
         setCameraOn(true);
+        socket.emit(StreamServiceMsg.STREAM_READY);
       }
     } else {
       // Turning off camera
