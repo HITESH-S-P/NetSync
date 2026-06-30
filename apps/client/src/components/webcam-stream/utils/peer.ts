@@ -111,7 +111,8 @@ export const handleSignal = (
   try {
     // If we receive an offer signal, it means the remote peer is initiating a new connection.
     // We clean up any existing peer first to ensure a fresh, clean connection.
-    if (signal && (signal.type === "offer" || signal.renegotiate)) {
+    // We do NOT destroy the peer if it is a renegotiation signal (where signal.renegotiate is true).
+    if (signal && signal.type === "offer" && !signal.renegotiate) {
       cleanupPeer(userID, peersRef, setRemoteStreams);
     }
 

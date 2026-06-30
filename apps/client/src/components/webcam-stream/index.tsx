@@ -39,6 +39,32 @@ import {
 import { getMedia } from "./utils/media";
 import { cleanupPeer, createPeer, handleSignal } from "./utils/peer";
 
+interface RemoteVideoProps {
+  stream: MediaStream;
+  muted: boolean;
+  className?: string;
+}
+
+const RemoteVideo = ({ stream, muted, className }: RemoteVideoProps) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream]);
+
+  return (
+    <video
+      ref={videoRef}
+      autoPlay
+      playsInline
+      muted={muted}
+      className={className}
+    />
+  );
+};
+
 interface WebcamStreamProps {
   users: User[];
 }
@@ -408,14 +434,10 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
             <div key={user.id} className="relative">
               <div className="relative aspect-video rounded-lg bg-black/10 dark:bg-black/30">
                 {remoteStreams[user.id] ? (
-                  <video
-                    autoPlay
-                    playsInline
+                  <RemoteVideo
+                    stream={remoteStreams[user.id]!}
                     muted={!speakerOn}
                     className="size-full scale-x-[-1] rounded-lg object-cover"
-                    ref={(element) => {
-                      if (element) element.srcObject = remoteStreams[user.id];
-                    }}
                   />
                 ) : (
                   <div className="absolute inset-0 flex items-center justify-center">
