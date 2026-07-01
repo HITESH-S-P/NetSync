@@ -61,7 +61,7 @@ export const join = async (
 
 export const leave = async (socket: Socket, io: Server): Promise<void> => {
   try {
-    if (!socket || socket.disconnected) return;
+    if (!socket) return;
 
     const roomID = getUserRoom(socket);
     if (!roomID) return;
@@ -75,6 +75,7 @@ export const leave = async (socket: Socket, io: Server): Promise<void> => {
       if (Object.keys(users).length === 0) {
         roomUsersCache.delete(roomID);
         codeService.deleteRoom(roomID);
+        roomNotes.delete(roomID);
       } else {
         roomUsersCache.set(roomID, users);
       }

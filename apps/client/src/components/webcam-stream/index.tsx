@@ -252,31 +252,6 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
     selectedVideoDevice,
   ]);
 
-  // Initialize device enumeration
-  useEffect(() => {
-    const handleDeviceChange = async () => {
-      await enumerateDevices(
-        setVideoDevices,
-        setAudioInputDevices,
-        setAudioOutputDevices,
-        selectedVideoDevice,
-        setSelectedVideoDevice,
-        selectedAudioInput,
-        setSelectedAudioInput,
-        selectedAudioOutput,
-        setSelectedAudioOutput
-      );
-    };
-
-    initDevices(handleDeviceChange);
-    return () => {
-      navigator.mediaDevices.removeEventListener(
-        "devicechange",
-        handleDeviceChange
-      );
-    };
-  }, [selectedVideoDevice, selectedAudioInput, selectedAudioOutput]);
-
   const toggleSpeaker = (newState: boolean) => {
     setSpeakerOn(newState);
     socket.emit(StreamServiceMsg.SPEAKER_STATE, newState);

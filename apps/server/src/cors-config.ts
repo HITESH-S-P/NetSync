@@ -1,8 +1,11 @@
-const ALLOWED_ORIGINS = ["http://localhost:3000"] as const;
+const ALLOWED_ORIGINS = [
+  "http://localhost:3000",
+  "https://net-sync-client-rhtk.vercel.app",
+] as const;
 
 const isVercelDeployment = (origin: string): boolean => {
-  const VERCEL_PATTERN =
-    /^https:\/\/rvsync-[a-zA-Z0-9]+\.vercel\.app\/?$/;
+  // Matches any Vercel deployment URL format, e.g., https://name.vercel.app
+  const VERCEL_PATTERN = /^https:\/\/[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*\.vercel\.app\/?$/;
   return VERCEL_PATTERN.test(origin);
 };
 

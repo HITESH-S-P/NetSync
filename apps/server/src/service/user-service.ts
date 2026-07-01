@@ -13,6 +13,8 @@ type UserData = {
 const socketToUserData = new Map<string, UserData>();
 const customIdToSocketId = new Map<string, string>();
 
+let nextUserIdCounter = 0;
+
 const generateCustomId = (): string => {
   const generateId = (num: number): string => {
     let id = "";
@@ -23,11 +25,10 @@ const generateCustomId = (): string => {
     return id;
   };
 
-  let counter = 0;
   let newId: string;
 
   do {
-    newId = generateId(counter++);
+    newId = generateId(nextUserIdCounter++);
   } while (customIdToSocketId.has(newId));
 
   return newId;
