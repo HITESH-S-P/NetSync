@@ -40,10 +40,15 @@ const Terminal = ({ results, setResults }: TerminalProps) => {
                 variant="ghost"
                 size="icon"
                 onClick={() => handleDownloadLogs(results)}
-                className="size-6"
+                className="size-6 text-slate-400 hover:text-white transition-colors"
                 aria-label="Download terminal logs"
-              ></Button>
+              >
+                <Download className="size-3.5" />
+              </Button>
             </TooltipTrigger>
+            <TooltipContent>
+              <p>Download logs</p>
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
 
@@ -54,10 +59,10 @@ const Terminal = ({ results, setResults }: TerminalProps) => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setResults([])}
-                className="size-6"
+                className="size-6 text-slate-400 hover:text-white transition-colors"
                 aria-label="Clear terminal"
               >
-                <Trash2 className="size-3" />
+                <Trash2 className="size-3.5" />
               </Button>
             </TooltipTrigger>
             <TooltipContent>

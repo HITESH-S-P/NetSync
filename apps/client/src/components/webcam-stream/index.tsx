@@ -355,34 +355,38 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
   }, []);
 
   return (
-    <div className="relative flex h-full flex-col bg-[color:var(--panel-background)] p-2">
+    <div className="relative flex h-full flex-col bg-[#09090f]/40 p-3">
       <div
-        className="grid auto-rows-[1fr] gap-2 overflow-y-auto"
+        className="grid auto-rows-max gap-3 overflow-y-auto pb-16"
         style={{
           gridTemplateColumns:
-            "repeat(auto-fit, minmax(min(100%, 200px), 1fr))",
+            "repeat(auto-fit, minmax(min(100%, 180px), 1fr))",
         }}
       >
         {/* Local video */}
         <div className="relative">
-          <div className="relative aspect-video rounded-lg bg-black/10 dark:bg-black/30">
+          <div className="relative aspect-video rounded-xl bg-gradient-to-br from-[#121225] to-[#070712] border border-white/[0.06] shadow-lg overflow-hidden group hover:border-white/10 transition-all duration-300">
             <video
               ref={videoRef}
               autoPlay
               playsInline
               muted
-              className="size-full scale-x-[-1] rounded-lg object-cover"
+              className="size-full scale-x-[-1] rounded-xl object-cover"
             />
             {!cameraOn && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <Avatar
-                  user={{
-                    id: storage.getUserId() ?? "",
-                    username: userMap.get(storage.getUserId() ?? "") ?? "",
-                  }}
-                  size="lg"
-                  showTooltip={false}
-                />
+              <div className="absolute inset-0 flex items-center justify-center bg-[#0d0d16]">
+                <div className="relative flex items-center justify-center">
+                  <div className="absolute -inset-1 rounded-full bg-indigo-500/20 blur-sm animate-pulse-glow"></div>
+                  <Avatar
+                    user={{
+                      id: storage.getUserId() ?? "",
+                      username: userMap.get(storage.getUserId() ?? "") ?? "",
+                    }}
+                    size="lg"
+                    showTooltip={false}
+                    className="relative border border-indigo-500/30"
+                  />
+                </div>
               </div>
             )}
             <VideoControls
@@ -394,8 +398,8 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
               remoteSpeakerStates={remoteSpeakerStates}
             />
             <div
-              className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded bg-black/50
-                px-2 py-1 text-sm text-white"
+              className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-md bg-black/60
+                backdrop-blur-md border border-white/5 px-2.5 py-0.5 text-xs text-slate-300 font-medium font-sans"
             >
               {userMap.get(storage.getUserId() ?? "")} (you)
             </div>
@@ -407,16 +411,24 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
           .filter((user) => user.id !== storage.getUserId())
           .map((user) => (
             <div key={user.id} className="relative">
-              <div className="relative aspect-video rounded-lg bg-black/10 dark:bg-black/30">
+              <div className="relative aspect-video rounded-xl bg-gradient-to-br from-[#121225] to-[#070712] border border-white/[0.06] shadow-lg overflow-hidden group hover:border-white/10 transition-all duration-300">
                 {remoteStreams[user.id] ? (
                   <RemoteVideo
                     stream={remoteStreams[user.id]!}
                     muted={!speakerOn}
-                    className="size-full scale-x-[-1] rounded-lg object-cover"
+                    className="size-full scale-x-[-1] rounded-xl object-cover"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Avatar user={user} size="lg" showTooltip={false} />
+                  <div className="absolute inset-0 flex items-center justify-center bg-[#0d0d16]">
+                    <div className="relative flex items-center justify-center">
+                      <div className="absolute -inset-1 rounded-full bg-violet-500/20 blur-sm animate-pulse-glow"></div>
+                      <Avatar
+                        user={user}
+                        size="lg"
+                        showTooltip={false}
+                        className="relative border border-violet-500/30"
+                      />
+                    </div>
                   </div>
                 )}
                 <VideoControls
@@ -428,8 +440,8 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
                   remoteSpeakerStates={remoteSpeakerStates}
                 />
                 <div
-                  className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded bg-black/50
-                    px-2 py-1 text-sm text-white"
+                  className="absolute bottom-2 left-2 max-w-[calc(100%-1rem)] truncate rounded-md bg-black/60
+                    backdrop-blur-md border border-white/5 px-2.5 py-0.5 text-xs text-slate-300 font-medium font-sans"
                 >
                   {user.username}
                 </div>
@@ -439,8 +451,8 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
       </div>
 
       {/* Controls */}
-      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 items-center gap-4">
-        <div className="flex items-center gap-2">
+      <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-x-2 bg-black/75 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 shadow-xl z-20">
+        <div className="flex items-center gap-1.5">
           <DeviceControls
             icon={cameraOn ? Video : VideoOff}
             label="camera"
@@ -481,10 +493,10 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
               }
               variant="ghost"
               size="icon"
-              className="bg-foreground/10 hover:bg-foreground/20"
+              className="bg-white/10 hover:bg-white/20 rounded-full h-8 w-8 text-white transition-colors"
               aria-label="Rotate camera"
             >
-              <RefreshCw className="size-5" />
+              <RefreshCw className="size-4" />
             </Button>
           )}
         </div>

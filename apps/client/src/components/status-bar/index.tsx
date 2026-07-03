@@ -51,27 +51,27 @@ const StatusBar = memo(function StatusBar({
   return (
     <section
       className={cn(
-        `animate-fade-in fixed inset-x-0 bottom-0 h-6
-        bg-[color:var(--toolbar-bg-primary)] py-1`,
+        `animate-fade-in h-6 w-full flex-shrink-0 bg-[#09090f]/90 border-t border-white/[0.08] flex items-center select-none`,
         className
       )}
       role="status"
       aria-label="Editor status bar"
     >
       <div
-        className={`flex items-center justify-end gap-x-2 px-2 text-xs
-          text-[color:var(--status-bar-text)]`}
+        className={`flex w-full items-center justify-end gap-x-4 px-4 text-[11px]
+          text-slate-400 font-sans`}
       >
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <MemoizedLanguageLabel />
           <LanguageSelection
             monaco={monaco}
             editor={editor}
-            className="hover:bg-primary-foreground/10"
+            className="hover:bg-white/5 hover:text-slate-200 transition-colors rounded px-1.5 py-0.5 text-slate-300 font-medium"
           />
         </div>
+        <div className="h-3 w-px bg-white/[0.08]" />
         <div
-          className="flex items-center"
+          className="flex items-center font-mono text-slate-300"
           aria-live="polite"
           aria-atomic="true"
         >
