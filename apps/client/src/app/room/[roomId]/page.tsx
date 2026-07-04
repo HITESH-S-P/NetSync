@@ -158,7 +158,7 @@ export default function Room() {
   const [showNotepad, setShowNotepad] = useState(true);
   const [showTerminal, setShowTerminal] = useState(true);
   const [showWebcam, setShowWebcam] = useState(true);
-  const [showLivePreview, setShowLivePreview] = useState(true);
+  const [showLivePreview, setShowLivePreview] = useState(false);
   const [code, setCode] = useState<string | null>(null);
   const [monaco, setMonaco] = useState<Monaco | null>(null);
   const [editor, setEditor] =
