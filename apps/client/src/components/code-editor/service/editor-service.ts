@@ -4,8 +4,8 @@ import type { Monaco } from "@monaco-editor/react";
 import type * as monaco from "monaco-editor";
 import themeList from "monaco-themes/themes/themelist.json";
 
-import { CodeServiceMsg, ScrollServiceMsg } from "@netsync/types/message";
-import type { Cursor, EditOp } from "@netsync/types/operation";
+import { CodeServiceMsg, ScrollServiceMsg } from "@rvsync/types/message";
+import type { Cursor, EditOp } from "@rvsync/types/operation";
 
 import { EDITOR_SETTINGS_KEY } from "@/lib/constants";
 import { storage } from "@/lib/services/storage";

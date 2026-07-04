@@ -1,4 +1,4 @@
-import type { User } from "@netsync/types/user";
+import type { User } from "@rvsync/types/user";
 
 import { getBackgroundColor, getTextColor } from "@/lib/utils";
 

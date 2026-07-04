@@ -1,4 +1,4 @@
-import type { ExecutionResult } from "@netsync/types/terminal";
+import type { ExecutionResult } from "@rvsync/types/terminal";
 
 import { cn } from "@/lib/utils";
 

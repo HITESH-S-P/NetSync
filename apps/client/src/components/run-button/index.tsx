@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Play, OctagonX } from "lucide-react";
+import { Play, OctagonX, Sparkles } from "lucide-react";
 import ReactDOM from "react-dom";
 
 import { Button } from "@/components/ui/button";
@@ -43,9 +43,9 @@ const RunButton = ({
 
   return (
     <>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-x-2">
         <Button
-          className={`h-9 px-5 py-1 rounded bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50 ${className}`}
+          className="h-8 px-3 rounded-md bg-white/[0.04] border border-white/10 hover:border-violet-500/50 hover:bg-violet-500/10 text-violet-300 font-sans text-xs font-semibold shadow-md active:scale-95 transition-all duration-200 flex items-center gap-x-1.5"
           onClick={() =>
             fakeExecuteCode(
               monaco,
@@ -59,24 +59,25 @@ const RunButton = ({
             )
           }
         >
-          # Feedback
+          <Sparkles className="size-3.5 text-violet-400" />
+          <span>AI Feedback</span>
         </Button>
         <Button
           onClick={handleClick}
-          className={`h-9 px-5 py-1 rounded bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition disabled:opacity-50 ${className}`}
+          className="h-8 px-3 rounded-md bg-emerald-600 border border-emerald-500/30 hover:bg-emerald-500 text-white font-sans text-xs font-semibold shadow-md active:scale-95 transition-all duration-200 flex items-center gap-x-1.5"
           disabled={!editor}
           aria-busy={isRunning}
           aria-label={isRunning ? "Cancel execution" : "Run code"}
         >
           {isRunning ? (
             <>
-              <OctagonX className="mr-2" aria-hidden="true" />
-              Cancel
+              <OctagonX className="size-3.5 animate-pulse text-red-200" aria-hidden="true" />
+              <span>Cancel</span>
             </>
           ) : (
             <>
-              <Play className="mr-2" aria-hidden="true" />
-              Run Code
+              <Play className="size-3.5 fill-current" aria-hidden="true" />
+              <span>Run Code</span>
             </>
           )}
         </Button>
@@ -84,23 +85,29 @@ const RunButton = ({
       {feedbackText &&
         typeof window !== "undefined" &&
         ReactDOM.createPortal(
-          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 backdrop-blur-sm">
-            <div className="bg-[#1f1f1f] text-gray-200 p-6 rounded-2xl shadow-2xl max-w-2xl w-[90%] border border-gray-700">
-              <h2 className="text-2xl font-semibold mb-4 text-center text-white">
-                AI Feedback
-              </h2>
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+            <div className="bg-[#0b0b14] text-slate-200 p-6 rounded-xl shadow-2xl max-w-2xl w-full border border-white/[0.08] flex flex-col max-h-[85vh] animate-slide-up">
+              <div className="flex items-center gap-x-2 mb-4 pb-3 border-b border-white/5">
+                <div className="p-1.5 rounded-md bg-violet-500/10 text-violet-400">
+                  <Sparkles className="size-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-white leading-none">AI Code Review</h2>
+                  <p className="text-[11px] text-slate-400 mt-1">Generated suggestions for improvement</p>
+                </div>
+              </div>
 
-              <div className="max-h-[65vh] overflow-y-auto text-sm whitespace-pre-wrap font-mono leading-relaxed bg-[#2a2a2a] p-4 rounded-md border border-gray-700">
+              <div className="flex-1 overflow-y-auto text-sm bg-black/40 p-4 rounded-lg border border-white/5 font-mono leading-relaxed text-slate-300">
                 {feedbackText}
               </div>
 
-              <div className="flex justify-center mt-6">
-                <button
+              <div className="flex justify-end gap-x-3 mt-5 pt-3 border-t border-white/5">
+                <Button
                   onClick={() => setFeedbackText(null)}
-                  className="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition"
+                  className="px-5 h-9 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-md shadow-indigo-950/20 transition-all duration-200 active:scale-95"
                 >
                   Close
-                </button>
+                </Button>
               </div>
             </div>
           </div>,

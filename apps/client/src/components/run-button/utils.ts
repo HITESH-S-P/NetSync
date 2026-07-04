@@ -4,11 +4,11 @@ import { Monaco } from "@monaco-editor/react";
 import OpenAI from "openai";
 import type * as monaco from "monaco-editor";
 
-import { CodeServiceMsg } from "@netsync/types/message";
+import { CodeServiceMsg } from "@rvsync/types/message";
 import {
   ExecutionResultType,
   type ExecutionResult,
-} from "@netsync/types/terminal";
+} from "@rvsync/types/terminal";
 
 import { getSocket } from "@/lib/socket";
 import { parseError } from "@/lib/utils";

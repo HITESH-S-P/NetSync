@@ -1,7 +1,7 @@
 import type { Server, Socket } from "socket.io";
 
-import { CodeServiceMsg, RoomServiceMsg } from "@netsync/types/message";
-import type { ExecutionResult } from "@netsync/types/terminal";
+import { CodeServiceMsg, RoomServiceMsg } from "@rvsync/types/message";
+import type { ExecutionResult } from "@rvsync/types/terminal";
 
 import { generateRoomID } from "@/utils/generate-room-id";
 import { normalizeRoomId } from "@/utils/normalize-room-id";
@@ -61,7 +61,7 @@ export const join = async (
 
 export const leave = async (socket: Socket, io: Server): Promise<void> => {
   try {
-    if (!socket || socket.disconnected) return;
+    if (!socket) return;
 
     const roomID = getUserRoom(socket);
     if (!roomID) return;
@@ -75,6 +75,7 @@ export const leave = async (socket: Socket, io: Server): Promise<void> => {
       if (Object.keys(users).length === 0) {
         roomUsersCache.delete(roomID);
         codeService.deleteRoom(roomID);
+        roomNotes.delete(roomID);
       } else {
         roomUsersCache.set(roomID, users);
       }

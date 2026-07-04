@@ -1,7 +1,7 @@
 import type { Socket } from "socket.io";
 
-import { PointerServiceMsg } from "@netsync/types/message";
-import type { Pointer } from "@netsync/types/pointer";
+import { PointerServiceMsg } from "@rvsync/types/message";
+import type { Pointer } from "@rvsync/types/pointer";
 
 import { getUserRoom } from "./room-service";
 import { getCustomId } from "./user-service";

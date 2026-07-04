@@ -29,7 +29,7 @@ const SaveNoteBtn = ({ markdownEditorRef }: MarkdownEditorProps) => (
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `netsync-note-${new Date().toLocaleString("en-GB").replace(/[/:, ]/g, "-")}.md`;
+      a.download = `rvsync-note-${new Date().toLocaleString("en-GB").replace(/[/:, ]/g, "-")}.md`;
       a.click();
       URL.revokeObjectURL(url);
     }}

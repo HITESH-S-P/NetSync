@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 
 import { MousePointer2 } from "lucide-react";
 
-import { PointerServiceMsg } from "@netsync/types/message";
-import type { Pointer } from "@netsync/types/pointer";
+import { PointerServiceMsg } from "@rvsync/types/message";
+import type { Pointer } from "@rvsync/types/pointer";
 
 import { userMap } from "@/lib/services/user-map";
 import { getSocket } from "@/lib/socket";

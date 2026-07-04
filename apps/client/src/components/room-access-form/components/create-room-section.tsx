@@ -6,7 +6,7 @@
  * - Loading states
  * - Error display
  *
- * By Dulapah Vibulsanti (https://dulapahv.dev)
+ * By Hitesh S P
  */
 
 import { CirclePlus } from 'lucide-react';
@@ -50,24 +50,24 @@ export const CreateRoomSection = ({
     <section aria-labelledby="create-room-heading">
       <form
         onSubmit={handleSubmit((data) => onSubmit(data), onError)}
-        className="flex flex-col space-y-2 sm:space-y-4"
+        className="flex flex-col space-y-3 sm:space-y-4"
         noValidate
       >
-        <h1 id="create-room-heading" className="text-lg font-medium sm:text-xl">
+        <h2 id="create-room-heading" className="text-lg font-bold text-white sm:text-xl">
           Create a Room
-        </h1>
+        </h2>
         <div
           className="flex flex-col space-y-1.5"
           role="group"
           aria-labelledby={inputId}
         >
-          <Label htmlFor={inputId} className="text-sm font-medium sm:text-base">
-            Name
+          <Label htmlFor={inputId} className="text-sm font-medium text-white/70 sm:text-base">
+            Your Name
           </Label>
           <Input
             id={inputId}
             placeholder="Enter your name"
-            className="text-sm sm:text-base"
+            className="input-premium w-full"
             disabled={isDisabled}
             aria-required="true"
             aria-invalid={errors.name ? 'true' : 'false'}
@@ -75,23 +75,23 @@ export const CreateRoomSection = ({
             {...register('name')}
           />
           {errors.name && (
-            <p id={errorId} className="text-sm text-red-500" role="alert">
+            <p id={errorId} className="text-xs text-rose-500 font-medium" role="alert">
               {errors.name.message}
             </p>
           )}
         </div>
         <Button
           type="submit"
-          className="bg-primary text-sm sm:text-base"
+          className="btn-premium w-full flex items-center justify-center gap-2"
           disabled={isDisabled}
           aria-busy={isSubmitting}
         >
           {isSubmitting ? (
-            <Spinner className="mr-2 size-4 sm:size-5" />
+            <Spinner className="size-4 sm:size-5" />
           ) : (
-            <CirclePlus className="mr-2 size-4 sm:size-5" aria-hidden="true" />
+            <CirclePlus className="size-4 sm:size-5" aria-hidden="true" />
           )}
-          {isSubmitting ? 'Creating...' : 'Create Room'}
+          <span>{isSubmitting ? 'Creating...' : 'Create Room'}</span>
         </Button>
       </form>
     </section>

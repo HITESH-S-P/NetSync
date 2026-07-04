@@ -9,13 +9,12 @@ import {
   type SetStateAction,
 } from "react";
 import { useParams, useRouter } from "next/navigation";
-
 import type { Monaco } from "@monaco-editor/react";
 import type * as monaco from "monaco-editor";
 
-import { CodeServiceMsg, RoomServiceMsg } from "@netsync/types/message";
-import type { ExecutionResult } from "@netsync/types/terminal";
-import type { User } from "@netsync/types/user";
+import { CodeServiceMsg, RoomServiceMsg } from "@rvsync/types/message";
+import type { ExecutionResult } from "@rvsync/types/terminal";
+import type { User } from "@rvsync/types/user";
 import { initEditorTheme } from "@/lib/init-editor-theme";
 import { userMap } from "@/lib/services/user-map";
 import { getSocket } from "@/lib/socket";
@@ -42,6 +41,8 @@ import {
 } from "@/components/status-bar";
 import { Terminal } from "@/components/terminal";
 import { WebcamStream } from "@/components/webcam-stream";
+
+import { Toolbar } from "@/components/toolbar";
 
 const MemoizedToolbar = memo(function MemoizedToolbar({
   monaco,
@@ -74,17 +75,39 @@ const MemoizedToolbar = memo(function MemoizedToolbar({
 }) {
   return (
     <div
-      className="fixed flex w-full items-center justify-between gap-x-2
-        bg-black p-1"
+      className="fixed flex w-full items-center justify-between gap-x-2 bg-[#09090f] border-b border-white/[0.08] px-4 py-1.5 h-11 z-50 backdrop-blur-md"
     >
-      <RunButton monaco={monaco} editor={editor} setOutput={setOutput} />
-      <nav aria-label="Collaboration Tools">
-        <div className="flex items-center gap-x-1 sm:gap-x-2">
-          <ShareButton roomId={roomId} />
-          {/* <FollowUser users={users} /> */}
-          <LeaveButton />
+      <div className="flex items-center gap-x-4">
+        {/* Brand Logo */}
+        <div className="flex items-center gap-x-2 pl-1 select-none">
+          <span className="text-sm font-bold text-gradient-brand">RVsync</span>
         </div>
-      </nav>
+        <div className="h-4 w-px bg-white/10 hidden md:block" />
+        <Toolbar
+          monaco={monaco}
+          editor={editor}
+          setShowNotepad={setShowNotepad}
+          setShowTerminal={setShowTerminal}
+          setShowWebcam={setShowWebcam}
+          setShowLivePreview={setShowLivePreview}
+          showNotepad={showNotepad}
+          showTerminal={showTerminal}
+          showWebcam={showWebcam}
+          showLivePreview={showLivePreview}
+        />
+      </div>
+
+      <div className="flex items-center gap-x-3">
+        <RunButton monaco={monaco} editor={editor} setOutput={setOutput} />
+        <div className="h-4 w-px bg-white/10" />
+        <nav aria-label="Collaboration Tools">
+          <div className="flex items-center gap-x-1.5 sm:gap-x-2">
+            <ShareButton roomId={roomId} />
+            <FollowUser users={users} />
+            <LeaveButton />
+          </div>
+        </nav>
+      </div>
     </div>
   );
 });
@@ -135,7 +158,7 @@ export default function Room() {
   const [showNotepad, setShowNotepad] = useState(true);
   const [showTerminal, setShowTerminal] = useState(true);
   const [showWebcam, setShowWebcam] = useState(true);
-  const [showLivePreview, setShowLivePreview] = useState(true);
+  const [showLivePreview, setShowLivePreview] = useState(false);
   const [code, setCode] = useState<string | null>(null);
   const [monaco, setMonaco] = useState<Monaco | null>(null);
   const [editor, setEditor] =
@@ -228,12 +251,12 @@ export default function Room() {
 
   return (
     <main
-      className="flex h-full min-w-[821px] flex-col"
+      className="flex h-screen w-screen overflow-hidden flex-col bg-[#09090f]"
       aria-label="Code Editor Workspace"
     >
       <RemotePointers />
       <div
-        className="h-9 flex-shrink-0"
+        className="h-11 flex-shrink-0"
         role="toolbar"
         aria-label="Editor Controls"
       >
@@ -256,103 +279,116 @@ export default function Room() {
         )}
       </div>
       {defaultCode !== null && mdContent !== null ? (
-        <ResizablePanelGroup
-          className="!h-[calc(100%-54px)]"
-          direction="horizontal"
-        >
-          <ResizablePanel defaultSize={65} minSize={10}>
-            <ResizablePanelGroup direction="vertical">
-              <ResizablePanel
-                className="animate-fade-in z-[1]"
-                role="region"
-                aria-label="Code Editor"
-                defaultSize={75}
-                minSize={10}
-              >
-                <ResizablePanelGroup
-                  direction="horizontal"
-                  className={cn(
-                    monaco && editor && "border-muted-foreground border-t"
-                  )}
-                >
-                  <ResizablePanel defaultSize={60} minSize={10}>
-                    <CodeEditor
-                      monacoRef={handleMonacoSetup}
-                      editorRef={handleEditorSetup}
-                      cursorPosition={setCursorPosition}
-                      defaultCode={defaultCode}
-                      setCode={setCode}
-                    />
-                  </ResizablePanel>
-                  <ResizableHandle
-                    aria-label="Resize Handle"
-                    className={cn(
-                      "bg-muted-foreground",
-                      (!monaco || !editor) && "hidden",
-                      !showLivePreview && "hidden"
-                    )}
-                  />
-                </ResizablePanelGroup>
-              </ResizablePanel>
-              <ResizableHandle
-                aria-label="Resize Handle"
-                className={cn(
-                  "bg-muted-foreground",
-                  (!monaco || !editor) && "hidden",
-                  !showTerminal && "hidden"
-                )}
-              />
-              <ResizablePanel
-                className={cn(
-                  "animate-fade-in-bottom",
-                  (!monaco || !editor) && "hidden",
-                  !showTerminal && "hidden"
-                )}
-                role="region"
-                aria-label="Terminal"
-                collapsible
-                minSize={10}
-                defaultSize={25}
-              >
-                <MemoizedTerminal results={output} setResults={setOutput} />
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </ResizablePanel>
-          <ResizableHandle
-            aria-label="Resize Handle"
-            className={cn(
-              "bg-muted-foreground",
-              (!monaco || !editor) && "hidden",
-              !showWebcam && "hidden"
-            )}
-          />
-          <ResizablePanel
-            className={cn(
-              "animate-fade-in-right",
-              monaco && editor && "border-muted-foreground border-t",
-              (!monaco || !editor) && "hidden",
-              !showWebcam && "hidden"
-            )}
-            role="region"
-            aria-label="Webcam Stream"
-            collapsible
-            minSize={10}
-            defaultSize={15}
+        <div className="flex-1 h-0 w-full overflow-hidden">
+          <ResizablePanelGroup
+            className="h-full w-full"
+            direction="horizontal"
           >
-            <MemoizedWebcamStream users={users} />
-          </ResizablePanel>
-        </ResizablePanelGroup>
+            <ResizablePanel defaultSize={85} minSize={20}>
+              <ResizablePanelGroup direction="vertical">
+                <ResizablePanel
+                  className="animate-fade-in z-[1]"
+                  role="region"
+                  aria-label="Code Editor"
+                  defaultSize={75}
+                  minSize={10}
+                >
+                  <ResizablePanelGroup
+                    direction="horizontal"
+                    className={cn(
+                      monaco && editor && "border-white/[0.08] border-t h-full w-full"
+                    )}
+                  >
+                    <ResizablePanel defaultSize={showLivePreview || showNotepad ? 50 : 100} minSize={10}>
+                      <CodeEditor
+                        monacoRef={handleMonacoSetup}
+                        editorRef={handleEditorSetup}
+                        cursorPosition={setCursorPosition}
+                        defaultCode={defaultCode}
+                        setCode={setCode}
+                      />
+                    </ResizablePanel>
+
+                    {showLivePreview && (
+                      <>
+                        <ResizableHandle
+                          aria-label="Resize Handle"
+                          className="bg-white/[0.08] w-[2px] hover:bg-indigo-500/50 transition-colors"
+                        />
+                        <ResizablePanel defaultSize={25} minSize={10}>
+                          <LivePreview value={code || defaultCode || ""} />
+                        </ResizablePanel>
+                      </>
+                    )}
+
+                    {showNotepad && (
+                      <>
+                        <ResizableHandle
+                          aria-label="Resize Handle"
+                          className="bg-white/[0.08] w-[2px] hover:bg-indigo-500/50 transition-colors"
+                        />
+                        <ResizablePanel defaultSize={25} minSize={10}>
+                          <Notepad markdown={mdContent || ""} />
+                        </ResizablePanel>
+                      </>
+                    )}
+                  </ResizablePanelGroup>
+                </ResizablePanel>
+
+                {showTerminal && (
+                  <>
+                    <ResizableHandle
+                      aria-label="Resize Handle"
+                      className="bg-white/[0.08] h-[2px] hover:bg-indigo-500/50 transition-colors"
+                    />
+                    <ResizablePanel
+                      className="animate-fade-in-bottom"
+                      role="region"
+                      aria-label="Terminal"
+                      collapsible
+                      minSize={10}
+                      defaultSize={25}
+                    >
+                      <MemoizedTerminal results={output} setResults={setOutput} />
+                    </ResizablePanel>
+                  </>
+                )}
+              </ResizablePanelGroup>
+            </ResizablePanel>
+
+            {showWebcam && (
+              <>
+                <ResizableHandle
+                  aria-label="Resize Handle"
+                  className="bg-white/[0.08] w-[2px] hover:bg-indigo-500/50 transition-colors"
+                />
+                <ResizablePanel
+                  className={cn(
+                    "animate-fade-in-right",
+                    monaco && editor && "border-white/[0.08] border-t"
+                  )}
+                  role="region"
+                  aria-label="Webcam Stream"
+                  collapsible
+                  minSize={10}
+                  defaultSize={15}
+                >
+                  <MemoizedWebcamStream users={users} />
+                </ResizablePanel>
+              </>
+            )}
+          </ResizablePanelGroup>
+        </div>
       ) : (
         <div
-          className="fixed left-0 top-0 flex size-full items-center justify-center p-2"
+          className="flex-1 flex w-full items-center justify-center p-4 bg-[#09090f]"
           role="status"
           aria-live="polite"
         >
-          <Alert className="bg-background/50 flex max-w-md gap-x-2">
-            <div>
-              <AlertTitle>Loading session</AlertTitle>
-            </div>
-          </Alert>
+          <div className="flex flex-col items-center gap-y-3 p-6 glass-card max-w-sm w-full text-center">
+            <Spinner className="size-8 text-indigo-500 animate-spin" />
+            <p className="text-sm text-slate-400 font-medium animate-pulse">Loading collaboration session...</p>
+          </div>
         </div>
       )}
       {monaco && editor && (

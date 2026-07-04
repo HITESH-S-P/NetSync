@@ -96,12 +96,12 @@ const RoomAccessForm = ({ roomId }: RoomAccessFormProps) => {
 
   return (
     <Card
-      className="border-none bg-black/20 backdrop-blur-sm"
+      className="border-none bg-transparent shadow-none"
       role="region"
       aria-label="Room access form"
     >
-      <CardContent className="px-4 py-4 sm:px-6 sm:py-6">
-        <div className="grid w-full items-center gap-4 sm:gap-6" role="group">
+      <CardContent className="p-0">
+        <div className="grid w-full items-center gap-6" role="group">
           {roomId ? (
             isRoomIdValid(roomId) ? (
               <>
@@ -168,7 +168,7 @@ const RoomAccessForm = ({ roomId }: RoomAccessFormProps) => {
                   isJoining={isJoining}
                 />
               </section>
-              <Separator />
+              <Separator className="bg-white/10" />
               <section aria-label="Join existing room">
                 <JoinRoomSection
                   register={registerJoin}

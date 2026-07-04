@@ -15,9 +15,9 @@ import {
   CodeServiceMsg,
   RoomServiceMsg,
   ScrollServiceMsg,
-} from "@netsync/types/message";
-import type { Cursor, EditOp } from "@netsync/types/operation";
-import type { Scroll } from "@netsync/types/scroll";
+} from "@rvsync/types/message";
+import type { Cursor, EditOp } from "@rvsync/types/operation";
+import type { Scroll } from "@rvsync/types/scroll";
 
 import { getSocket } from "@/lib/socket";
 import type { StatusBarCursorPosition } from "@/components/status-bar";

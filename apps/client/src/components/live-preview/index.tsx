@@ -22,7 +22,7 @@ const LivePreview = ({ value }: LivePreviewProps) => {
       template="static"
       className="!h-full"
       files={{
-        "index.html": `<!DOCTYPE html><html><head>${DISABLE_TAILWIND_CDN_WARN}${SANDPACK_CDN}</head><body class="h-screen">${value}</body></html>`,
+        "index.html": `<!DOCTYPE html><html><head>${DISABLE_TAILWIND_CDN_WARN}${SANDPACK_CDN}</head><body class="h-screen bg-[#0d0d16] text-slate-100">${value}</body></html>`,
       }}
       options={{
         initMode: "user-visible",

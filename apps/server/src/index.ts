@@ -8,11 +8,11 @@ import {
   RoomServiceMsg,
   ScrollServiceMsg,
   StreamServiceMsg,
-} from "@netsync/types/message";
-import type { Cursor, EditOp } from "@netsync/types/operation";
-import type { Pointer } from "@netsync/types/pointer";
-import type { Scroll } from "@netsync/types/scroll";
-import type { ExecutionResult } from "@netsync/types/terminal";
+} from "@rvsync/types/message";
+import type { Cursor, EditOp } from "@rvsync/types/operation";
+import type { Pointer } from "@rvsync/types/pointer";
+import type { Scroll } from "@rvsync/types/scroll";
+import type { ExecutionResult } from "@rvsync/types/terminal";
 
 import * as codeService from "@/service/code-service";
 import * as pointerService from "@/service/pointer-service";
@@ -63,7 +63,7 @@ app.listen(PORT, (token) => {
   if (!token) {
     console.warn(`Port ${PORT} is already in use`);
   }
-  console.log(`Netsync-server listening on port: ${PORT}`);
+  console.log(`RVsync-server listening on port: ${PORT}`);
 });
 
 app.get("/", (res, req) => {
@@ -123,8 +123,10 @@ io.on("connection", (socket) => {
   socket.on(StreamServiceMsg.STREAM_READY, () =>
     webRTCService.onStreamReady(socket)
   );
-  socket.on(StreamServiceMsg.SIGNAL, (signal: SignalData) =>
-    webRTCService.handleSignal(socket, signal)
+  socket.on(
+    StreamServiceMsg.SIGNAL,
+    (payload: { targetID: string; signal: SignalData }) =>
+      webRTCService.handleSignal(socket, payload)
   );
   socket.on(StreamServiceMsg.CAMERA_OFF, () =>
     webRTCService.onCameraOff(socket)

@@ -4,9 +4,7 @@ import { Send } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import {
-  CONTACT_URL,
   GITHUB_URL,
-  PORTFOLIO_URL,
   REPO_URL,
 } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
@@ -20,23 +18,6 @@ const ExternalLink = ({ forceDark = false }: ExternalLinkProps) => {
 
   return (
     <>
-      <Button variant="outline" size="sm" asChild>
-        <a
-          href={PORTFOLIO_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Visit portfolio website (opens in new tab)"
-        >
-          {/* <Image
-            src="/images/codex-logo.svg"
-            alt="Mirai logo"
-            className="mr-2"
-            width={16}
-            height={16}
-          /> */}
-          My Portfolio
-        </a>
-      </Button>
       <Button variant="outline" size="sm" asChild>
         <a
           href={GITHUB_URL}
@@ -59,7 +40,7 @@ const ExternalLink = ({ forceDark = false }: ExternalLinkProps) => {
           href={REPO_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Visit Netsync GitHub repository (opens in new tab)"
+          aria-label="Visit RVsync GitHub repository (opens in new tab)"
         >
           <Image
             src={`/images/${resolvedTheme === "light" && !forceDark ? "octocat" : "octocat-white"}.svg`}
@@ -68,18 +49,18 @@ const ExternalLink = ({ forceDark = false }: ExternalLinkProps) => {
             width={16}
             height={16}
           />
-          Netsync GitHub
+          RVsync GitHub
         </a>
       </Button>
       <Button variant="outline" size="sm" asChild>
         <a
-          href={CONTACT_URL}
+          href={GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Contact me (opens in new tab)"
+          aria-label="Contact (opens in new tab)"
         >
           <Send className="mr-2 size-4" />
-          Contact Me
+          Contact
         </a>
       </Button>
     </>
