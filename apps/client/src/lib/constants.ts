@@ -19,6 +19,9 @@ export const GITHUB_CLIENT_SECRET = IS_DEV_ENV
   ? process.env.GITHUB_CLIENT_SECRET_DEV
   : process.env.GITHUB_CLIENT_SECRET_PROD;
 
+export const STATUS_URL = "https://net-sync.betterstack.com";
+export const KASCA_SERVER_MONITOR_ID = "2887417";
+
 export const NAME_MAX_LENGTH = 64;
 
 export const SITE_NAME = "RVsync — Real-time Code Collaboration";
