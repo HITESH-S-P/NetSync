@@ -30,25 +30,28 @@ export const updateCode = (
   const editor = editorInstanceRef.current;
   if (!editor) return;
 
-  skipUpdateRef.current = true;
-  const model = editor.getModel();
-  if (model) {
-    model.pushEditOperations(
-      [],
-      [
-        {
-          forceMoveMarkers: true,
-          text: op[0],
-          range: {
-            startLineNumber: op[1],
-            startColumn: op[2],
-            endLineNumber: op[3],
-            endColumn: op[4],
+  try {
+    skipUpdateRef.current = true;
+    const model = editor.getModel();
+    if (model) {
+      model.pushEditOperations(
+        [],
+        [
+          {
+            forceMoveMarkers: true,
+            text: op[0],
+            range: {
+              startLineNumber: op[1],
+              startColumn: op[2],
+              endLineNumber: op[3],
+              endColumn: op[4],
+            },
           },
-        },
-      ],
-      () => []
-    );
+        ],
+        () => []
+      );
+    }
+  } finally {
+    skipUpdateRef.current = false;
   }
-  skipUpdateRef.current = false;
 };

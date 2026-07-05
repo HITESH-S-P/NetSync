@@ -70,15 +70,13 @@ export const updateLang = (socket: Socket, langId: string): void => {
     socket.to(roomID).emit(CodeServiceMsg.UPDATE_LANG, langId);
   }
 };
-const spliceString = (
-  original: string,
-  start: number,
-  end: number,
-  insert: string
-): string => {
-  if (start === end && !insert) return original;
-  if (start === 0 && end === original.length) return insert;
-  return original.substring(0, start) + insert + original.substring(end);
+const getFlatIndex = (lines: string[], lineNum: number, col: number): number => {
+  let index = 0;
+  for (let i = 0; i < lineNum - 1; i++) {
+    index += (lines[i] ?? "").length + 1; // +1 for the newline character
+  }
+  index += col - 1;
+  return index;
 };
 
 export const updateCode = (socket: Socket, operation: EditOp): void => {
@@ -93,66 +91,14 @@ export const updateCode = (socket: Socket, operation: EditOp): void => {
   const [txt, startLnNum, startCol, endLnNum, endCol] = operation;
 
   const lines = currentCode.split("\n");
-  const maxLine = Math.max(lines.length, startLnNum);
+  const startIdx = getFlatIndex(lines, startLnNum, startCol);
+  const endIdx = getFlatIndex(lines, endLnNum, endCol);
 
-  if (maxLine > lines.length) {
-    lines.length = maxLine;
-    lines.fill("", lines.length, maxLine);
-  }
+  const updatedCode =
+    currentCode.substring(0, startIdx) +
+    txt +
+    currentCode.substring(endIdx);
 
-  const isEmptyLineDeletion =
-    txt === "" && startLnNum < endLnNum && startCol === 1 && endCol === 1;
-
-  if (isEmptyLineDeletion) {
-    lines.splice(startLnNum - 1, endLnNum - startLnNum);
-  } else if (startLnNum === endLnNum) {
-    const lineIndex = startLnNum - 1;
-    const line = lines[lineIndex] || "";
-    const safeStartCol = Math.max(0, Math.min(startCol - 1, line.length));
-    const safeEndCol = Math.max(0, Math.min(endCol - 1, line.length));
-    lines[lineIndex] = spliceString(line, safeStartCol, safeEndCol, txt);
-  } else {
-    const textLines = txt.split("\n");
-    const startLineIndex = startLnNum - 1;
-    const endLineIndex = endLnNum - 1;
-    const startLine = lines[startLineIndex] || "";
-    const endLine = lines[endLineIndex] || "";
-    const safeStartCol = Math.min(Math.max(0, startCol - 1), startLine.length);
-    const safeEndCol = Math.min(Math.max(0, endCol - 1), endLine.length);
-    const newStartLine = spliceString(
-      startLine,
-      safeStartCol,
-      startLine.length,
-      textLines[0]
-    );
-    const newEndLine = spliceString(
-      endLine,
-      0,
-      safeEndCol,
-      textLines[textLines.length - 1]
-    );
-    const newLinesCount = textLines.length;
-    const removedLinesCount = endLineIndex - startLineIndex + 1;
-    const sizeChange = newLinesCount - removedLinesCount;
-
-    if (sizeChange > 0) {
-      lines.length += sizeChange;
-    }
-
-    if (newLinesCount === 2) {
-      lines[startLineIndex] = newStartLine;
-      lines[startLineIndex + 1] = newEndLine;
-      if (removedLinesCount > 2) {
-        lines.splice(startLineIndex + 2, removedLinesCount - 2);
-      }
-    } else {
-      // General case
-      const newLines = [newStartLine, ...textLines.slice(1, -1), newEndLine];
-      lines.splice(startLineIndex, removedLinesCount, ...newLines);
-    }
-  }
-
-  const updatedCode = lines.join("\n");
   const data = initializeRoom(roomID);
   data.code = updatedCode;
 };

@@ -9,11 +9,12 @@ import { getSocket } from "@/lib/socket";
 import { storage } from "./services/storage";
 
 export const leaveRoom = (): Promise<void> => {
-  return new Promise(() => {
+  return new Promise((resolve) => {
     const socket = getSocket();
 
     socket.emit(RoomServiceMsg.LEAVE);
     storage.clear();
+    resolve();
   });
 };
 

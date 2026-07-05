@@ -153,6 +153,7 @@ const MarkdownEditorMain = ({ markdown }: MarkdownEditorProps) => {
   }, [resolvedTheme]);
 
   const onChange = (value: string) => {
+    if (value === contentRef.current) return;
     contentRef.current = value;
     socket.emit(RoomServiceMsg.UPDATE_MD, value);
   };

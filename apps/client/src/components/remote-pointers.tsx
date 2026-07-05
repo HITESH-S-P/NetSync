@@ -12,7 +12,6 @@ interface RemotePointer {
   id: string;
   position: Pointer;
   lastUpdate: number;
-  isVisible: boolean;
 }
 
 const POINTER_TIMEOUT = 2700; // Hide pointer after 2.7 seconds of inactivity
@@ -73,7 +72,6 @@ const RemotePointers = () => {
           id: userId,
           position: pointer,
           lastUpdate: Date.now(),
-          isVisible: true,
         });
         return updated;
       });
@@ -88,19 +86,10 @@ const RemotePointers = () => {
         for (const [id, pointer] of updated.entries()) {
           const timeSinceUpdate = now - pointer.lastUpdate;
 
-          // Start fade out animation
-          if (timeSinceUpdate > POINTER_TIMEOUT && pointer.isVisible) {
-            updated.set(id, { ...pointer, isVisible: false });
+          // Remove pointer completely after fade animation completes
+          if (timeSinceUpdate > POINTER_TIMEOUT + FADE_DURATION) {
+            updated.delete(id);
             hasChanges = true;
-
-            // Remove pointer after fade animation completes
-            setTimeout(() => {
-              setPointers((current) => {
-                const next = new Map(current);
-                next.delete(id);
-                return next;
-              });
-            }, FADE_DURATION);
           }
         }
 
@@ -129,6 +118,7 @@ const RemotePointers = () => {
         // Calculate scaled position based on viewport differences
         const scaledX = (pointer.position[0] / 100) * viewport.width;
         const scaledY = (pointer.position[1] / 100) * viewport.height;
+        const isVisible = Date.now() - pointer.lastUpdate < POINTER_TIMEOUT;
 
         return (
           <div
@@ -139,7 +129,7 @@ const RemotePointers = () => {
             style={{
               left: `${scaledX}px`,
               top: `${scaledY}px`,
-              opacity: pointer.isVisible ? 1 : 0,
+              opacity: isVisible ? 1 : 0,
               backfaceVisibility: "hidden",
               transition: `opacity ${FADE_DURATION}ms ease-out, left 100ms ease-out, top 100ms ease-out`,
             }}
