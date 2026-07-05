@@ -1,6 +1,8 @@
 "use client";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { BASE_SERVER_URL } from "@/lib/constants";
 import { parseError } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -20,6 +22,11 @@ interface RoomAccessFormProps {
 
 const RoomAccessForm = ({ roomId }: RoomAccessFormProps) => {
   const router = useRouter();
+
+  useEffect(() => {
+    // Send a wake-up call to the server
+    fetch(BASE_SERVER_URL).catch(() => { });
+  }, []);
 
   const {
     register: registerCreate,

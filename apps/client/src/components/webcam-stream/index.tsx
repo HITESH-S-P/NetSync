@@ -101,6 +101,11 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
   const streamRef = useRef<MediaStream | null>(null);
   const peersRef = useRef<Record<string, Peer.Instance>>({});
   const pendingSignalsRef = useRef<Record<string, unknown[]>>({});
+  const speakerOnRef = useRef(speakerOn);
+
+  useEffect(() => {
+    speakerOnRef.current = speakerOn;
+  }, [speakerOn]);
 
   const handleGetMedia = useCallback(async () => {
     return getMedia(
@@ -270,7 +275,7 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
   useEffect(() => {
     if (hasRequestedPermissions) {
       socket.emit(StreamServiceMsg.STREAM_READY);
-      socket.emit(StreamServiceMsg.SPEAKER_STATE, speakerOn);
+      socket.emit(StreamServiceMsg.SPEAKER_STATE, speakerOnRef.current);
     }
 
     socket.on(StreamServiceMsg.USER_READY, (userID: string) => {
@@ -283,7 +288,7 @@ const WebcamStream = ({ users }: WebcamStreamProps) => {
           setRemoteStreams,
           pendingSignalsRef
         );
-        socket.emit(StreamServiceMsg.SPEAKER_STATE, speakerOn);
+        socket.emit(StreamServiceMsg.SPEAKER_STATE, speakerOnRef.current);
       }
     });
 

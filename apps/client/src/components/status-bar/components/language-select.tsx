@@ -85,10 +85,14 @@ const LanguageSelection = memo(
       const model = editor.getModel();
       if (!model) return;
 
+      let isRemoteChange = false;
+
       const handleLanguageChange = (langID: string) => {
         const model = editor.getModel();
         if (model) {
+          isRemoteChange = true;
           monaco.editor.setModelLanguage(model, langID);
+          isRemoteChange = false;
         }
       };
 
@@ -106,6 +110,8 @@ const LanguageSelection = memo(
 
       // Listen for language changes
       const disposable = model.onDidChangeLanguage((e) => {
+        if (isRemoteChange) return;
+
         const newLanguage = monaco.languages
           .getLanguages()
           .find((lang) => lang.id === e.newLanguage);

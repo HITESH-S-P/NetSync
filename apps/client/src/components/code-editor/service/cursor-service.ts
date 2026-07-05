@@ -177,5 +177,8 @@ export const removeCursor = (
   );
   selectionElements.forEach((el) => el.remove());
 
+  const styleElement = document.getElementById(`cursor-style-${userID}`);
+  styleElement?.remove();
+
   cursorDecorationsRef.current[userID]?.clear();
 };
